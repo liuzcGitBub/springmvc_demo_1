@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-        <!-- 定义一个工程，默认任务为warFile。 -->
-<project name="springmvc" default="warFile" basedir=".">
+<!-- 定义一个工程，默认任务为warFile。 -->
+<project name="modi" default="warFile" basedir=".">
+
     <!-- 定义属性，打成war包的名称。 -->
-    <property name="warFileName" value="springmvc.war"></property>
-    <property name="tomcat.home" value="/usr/local/program/apache-tomcat-8.5.66" />
-    <property name="log.file" value="${tomcat.home}/webapps/log.info"/>
+    <property name="warFileName" value="modi.war"></property>
+    <property name="tomcat.home" value="D:\workFile\Programe Install Directory\Apache_Tomcat" />
+<!--    <property name="tomcat.home" value="/opt/apache-tomcat-8.5.64" />-->
+    <property name="log.file" value="${tomcat.home}/logs/log.info"/>
     <!-- 定义路径，编译java文件时用到的jar包。 -->
     <path id="project.lib">
 
@@ -23,14 +25,14 @@
 
     <!-- 定义任务，编译src文件夹中的java文件，编译后的class文件放到创建的文件夹下。 -->
     <target name="compile" depends="clean">
+        <record name="D:\log.log" loglevel="info" append="no" action="start"/>
         <echo>--编译java文件--</echo>
-        <javac srcdir="${basedir}/src" destdir="${basedir}/build" includeantruntime="on"  encoding="UTF-8"
-               debug="true">
+        <javac srcdir="${basedir}/src" destdir="${basedir}/build" includeantruntime="on" fork="true"   encoding="UTF-8" debug="true">
             <classpath refid="project.lib">
             </classpath>
         </javac>
         <copy todir="${basedir}/build">
-            <fileset dir="${basedir}/src/resources">
+            <fileset dir="${basedir}/web/WEB-INF">
                 <include name="**/**.*" />
 
             </fileset>
@@ -54,10 +56,10 @@
                 <exclude name="**/*.class"/>
             </fileset>
             <!-- 将jar和class文件拷贝到war包的对应路径下。 -->
-            <lib dir="${basedir}/web/WEB-INF/lib" />
+            <lib dir="${basedir}/lib" />
             <classes dir="${basedir}/build" />
         </war>
         <delete dir="${basedir}/build" />
         <echo>--结束--</echo>
     </target>
-</project>  
+</project>
