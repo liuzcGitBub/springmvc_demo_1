@@ -19,7 +19,7 @@ public class HelloSpringMvcController {
 
     @RequestMapping(value = "/getPort")
     public ModelAndView getPort(){
-        ModelAndView model = new ModelAndView("web/index");
+        ModelAndView model = new ModelAndView("index");
         return model;
     }
 }
